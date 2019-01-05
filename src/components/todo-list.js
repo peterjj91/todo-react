@@ -7,8 +7,8 @@ const TodoList = () => {
 
   return (
       <ul>
-          <li><TodoListItem /></li>
-          <li><TodoListItem /></li>
+          <li><TodoListItem label='Drink coffee' /></li>
+          <li><TodoListItem label='Build React App' /></li>
       </ul>
   )
 };
