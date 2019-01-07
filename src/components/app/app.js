@@ -62,41 +62,51 @@ export default class App extends Component {
     })
   };
 
+  toggleProperty(arr, id, propName) {
+    const idx = arr.findIndex((el) => el.id === id);      
+
+    // update object
+    const oldItem = arr[idx];
+    const newItem = { ...oldItem, [propName]: !oldItem[propName] };
+
+    return [
+      ...arr.slice(0, idx),
+      newItem,
+      ...arr.slice(idx + 1)
+    ];
+  };
+
   onToggleImportant = (id) => {
-    console.log('Toggle important -', id);
+    this.setState(({todoData}) => {
+      return {
+        todoData: this.toggleProperty(todoData, id, 'important')
+      }
+    });
   };
 
   onToggleDone = (id) => {
     this.setState(({todoData}) => {
-      const idx = todoData.findIndex((el) => el.id === id);      
-
-      // update object
-      const oldItem = todoData[idx];
-      const newItem = { ...oldItem, done: !oldItem.done };
-
-      // construct new array 
-      const newArray = [
-        ...todoData.slice(0, idx), 
-        newItem,
-        ...todoData.slice(idx + 1)
-      ]
-
       return {
-        todoData: newArray
+        todoData: this.toggleProperty(todoData, id, 'done')
       }
     });
   };
 
   render() {
+    const { todoData } = this.state;
+    const doneCount = todoData
+                      .filter((el) => el.done).length;
+    const todoCount = todoData.length - doneCount;
+
     return (
       <div className="todo-app">
-        <AppHeader todo={1} done={3} />
+        <AppHeader todo={todoCount} done={doneCount} />
         <div className="top-panel d-flex">
           <SearchPanel />
           <ItemStatusFilter />
         </div>
         <TodoList 
-          todos={this.state.todoData} 
+          todos={todoData} 
           onDeleted={ this.deleteItem }
           onToggleImportant={this.onToggleImportant}
           onToggleDone = {this.onToggleDone}/>
