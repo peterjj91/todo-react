@@ -90,7 +90,7 @@ export default class App extends Component {
   render() {
     return (
       <div className="todo-app">
-        <AppHeader />
+        <AppHeader todo={1} done={3} />
         <div className="top-panel d-flex">
           <SearchPanel />
           <ItemStatusFilter />
