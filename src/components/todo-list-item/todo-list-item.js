@@ -9,10 +9,10 @@ export default class TodoListItem extends Component {
   //     done: false
   //   };
   // }
-  state = {
-    done: false,
-    important: false
-  }
+  // state = {
+  //   done: false,
+  //   important: false
+  // }
 
   // Варианты реализация клика
   // constructor() {
@@ -21,25 +21,19 @@ export default class TodoListItem extends Component {
   //     console.log(`Done: ${this.props.label}`);
   //   }
   // }
-  onLabelClick = () => {
-    this.setState(({done}) => {
-      return {
-        done: !done // меняем на противоположное значение
-      }
-    });
-  }
-
-  onMarkImportant = () => {
-    this.setState(({important}) => {
-      return {
-        important: !important  
-      }
-    });
-  }
+  // onLabelClick = () => {
+  //   this.setState(({done}) => {
+  //     return {
+  //       done: !done // меняем на противоположное значение
+  //     }
+  //   });
+  // }
 
   render() {
-    const { label, onDeleted } = this.props;
-    const { done, important } = this.state; // состояние
+    const { label, onDeleted,
+          onToggleImportant, 
+          onToggleDone,
+          important, done } = this.props;
 
     let classNames = 'todo-list-item';
     if (done) {
@@ -54,13 +48,13 @@ export default class TodoListItem extends Component {
       <span className={classNames}>
         <span
           className="todo-list-item-label"
-          onClick={ this.onLabelClick }>
+          onClick={ onToggleDone }>
           {label}
         </span>
 
         <button type="button"
                 className="btn btn-outline-success btn-sm float-right"
-                onClick={this.onMarkImportant}>
+                onClick={onToggleImportant}>
           <i className="fa fa-exclamation" />
         </button>
 
